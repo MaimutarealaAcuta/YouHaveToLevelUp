@@ -14,13 +14,13 @@ public class SoundManager : MonoBehaviour
         backgroundMusic.volume = PlayerPrefs.GetFloat("MusicVolume", 1.0f);
         sfxSource.volume = PlayerPrefs.GetFloat("SFXVolume", 1.0f);
         PlayerStats.OnLevelUp += PlayLevelUpSound;
-        Enemy.OnEnemyDefeated += PlayEnemyDefeatedSound;
+        EnemyController.OnEnemyDefeated += PlayEnemyDefeatedSound;
     }
 
     void OnDestroy()
     {
         PlayerStats.OnLevelUp -= PlayLevelUpSound;
-        Enemy.OnEnemyDefeated -= PlayEnemyDefeatedSound;
+        EnemyController.OnEnemyDefeated -= PlayEnemyDefeatedSound;
     }
 
     public void PlayLevelUpSound(int level)

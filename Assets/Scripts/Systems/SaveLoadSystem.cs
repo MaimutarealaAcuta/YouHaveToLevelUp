@@ -56,7 +56,7 @@ public class SaveLoadSystem : MonoBehaviour
             playerStats.maxMana = PlayerPrefs.GetInt("MaxMana");
             playerStats.attack = PlayerPrefs.GetInt("Attack");
             playerStats.defense = PlayerPrefs.GetInt("Defense");
-            bankSystem.money = PlayerPrefs.GetInt("Money");
+            bankSystem.Money = PlayerPrefs.GetInt("Money");
             inventorySystem.healthPotions = PlayerPrefs.GetInt("HealthPotions");
             inventorySystem.manaPotions = PlayerPrefs.GetInt("ManaPotions");
             inventorySystem.helmetLevel = PlayerPrefs.GetInt("HelmetLevel");
