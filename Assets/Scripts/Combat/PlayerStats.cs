@@ -13,7 +13,7 @@ public class PlayerStats : MonoBehaviour
     public int money = 0;
     public int score = 0;
 
-    private int[] xpTable = { 0, 100, 300, 600, 1000, 1500, 2100, 2800, 3600, 4500, 5500, 6600, 7800, 9100, 10500, 12000, 13600, 15300, 17100, 19000, 21000, 23100, 25300, 27600, 30000, 32500, 35100, 37800, 40600, 43500 };
+    public int MaxXP { get { return 50 * level * (level + 1); } }
 
     public delegate void LevelUpAction(int newLevel);
     public static event LevelUpAction OnLevelUp;
@@ -30,9 +30,14 @@ public class PlayerStats : MonoBehaviour
         CheckLevelUp();
     }
 
+    public void AddExperiencePerc(int percentage)
+    {
+        AddExperience(MaxXP * percentage / 100);
+    }
+
     private void CheckLevelUp()
     {
-        while (level < xpTable.Length && experience >= xpTable[level])
+        while (level < 100 && experience >= MaxXP)
         {
             LevelUp();
         }
@@ -40,20 +45,16 @@ public class PlayerStats : MonoBehaviour
 
     private void LevelUp()
     {
+        experience -= MaxXP;
         level++;
-        maxHealth += 10; // Example increment
-        health = maxHealth;
-        maxMana += 5; // Example increment
-        mana = maxMana;
+        maxHealth = maxHealth * 11 / 10; // +10%
+        health = health * 11 / 10; // +10%
+        maxMana = maxMana * 105 / 100; // +5%
+        mana = mana * 105 / 100; // +5%
         attack += 2; // Example increment
         defense += 2; // Example increment
         OnLevelUp?.Invoke(level);
         Debug.Log($"Leveled up to {level}! Health: {health}, Mana: {mana}, Attack: {attack}, Defense: {defense}");
-    }
-
-    public int GetNextLevelXP()
-    {
-        return xpTable[level];
     }
 
     public void TakeDamage(int amount)
@@ -85,6 +86,11 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    public void RestoreHealthPerc(int percentage)
+    {
+        RestoreHealth(maxHealth * percentage / 100);
+    }
+
     public void RestoreMana(int amount)
     {
         mana += amount;
@@ -92,5 +98,10 @@ public class PlayerStats : MonoBehaviour
         {
             mana = maxMana;
         }
+    }
+
+    public void RestoreManaPerc(int percentage)
+    {
+        RestoreMana(maxMana * percentage / 100);
     }
 }
