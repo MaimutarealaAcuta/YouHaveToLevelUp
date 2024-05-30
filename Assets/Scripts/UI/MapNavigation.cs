@@ -11,13 +11,18 @@ public class MapNavigation : MonoBehaviour
     
     void Start()
     {
-        GoToTown();
+        GameEvents.OnGameStart += StartGame;
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    private void StartGame()
+    {
+        GoToTown();
     }
 
     public void GoToTown()
