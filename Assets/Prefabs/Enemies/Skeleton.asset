@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Skeleton
   baseHealth: 30
-  baseAttack: 5
+  baseAttack: 4
   baseDefense: 2
   baseExperienceReward: 30
-  baseGoldReward: 15
+  baseGoldReward: 20
   animatorController: {fileID: 9100000, guid: d0db564688d76b245800880e74fcaa2a, type: 2}
   enemyPrefab: {fileID: 554711834668897395, guid: c4836c1ba681fa34fb16d3d86dfe797a, type: 3}

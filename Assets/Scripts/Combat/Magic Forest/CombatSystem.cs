@@ -29,11 +29,14 @@ public class CombatSystem : MonoBehaviour
     [SerializeField]
     private int baseManaCost = 10;
 
+    public InventorySystem inventorySystem;
+
     public delegate void SwordSlashAction();
     public static event SwordSlashAction OnSwordSlash;
 
     void Start()
     {
+        inventorySystem = FindObjectOfType<InventorySystem>();
         combatLog = new string[logLimit];
         SpawnEnemy();
     }
@@ -58,7 +61,7 @@ public class CombatSystem : MonoBehaviour
 
     public void PerformPhysicalAttack()
     {
-        int damage = player.attack - currentEnemy.enemyData.GetDefense(player.level);
+        int damage = player.attack + inventorySystem.GetSwordLevel() - currentEnemy.enemyData.GetDefense(player.level);
         if (damage < 0) damage = 0;
 
         currentEnemy.TakeDamage(damage, player.level);
@@ -81,7 +84,7 @@ public class CombatSystem : MonoBehaviour
     {
         if (player.mana >= GetManaCost())
         {
-            int damage = player.attack * 2 - currentEnemy.enemyData.GetDefense(player.level);
+            int damage = (player.attack + +inventorySystem.GetSwordLevel()) * 2 - currentEnemy.enemyData.GetDefense(player.level);
             if (damage < 0) damage = 0;
             player.UseMana(10);
 
@@ -120,7 +123,7 @@ public class CombatSystem : MonoBehaviour
 
     public void EnemyCounterAttack()
     {
-        int damage = currentEnemy.enemyData.GetAttack(player.level) - player.defense;
+        int damage = currentEnemy.enemyData.GetAttack(player.level) - player.defense - inventorySystem.GetShieldLevel() + inventorySystem.GetHelmetLevel();
         if (damage < 0) damage = 0;
         player.TakeDamage(damage);
         AddToCombatLog($"Enemy dealt {damage} damage to you!");
