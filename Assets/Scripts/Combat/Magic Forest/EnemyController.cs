@@ -53,7 +53,9 @@ public class EnemyController : MonoBehaviour
     void Die()
     {
         Debug.Log(enemyData.enemyName + " died!");
-        // Add death animation or other logic here
+
+        OnEnemyDefeated?.Invoke(enemyData.level);
+
         Destroy(gameObject);
     }
 }

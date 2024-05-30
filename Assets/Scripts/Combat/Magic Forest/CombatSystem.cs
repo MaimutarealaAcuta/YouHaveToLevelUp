@@ -20,11 +20,20 @@ public class CombatSystem : MonoBehaviour
     private int logIndex = 0;
     private bool logIsFull = false;
 
+    [Header("Combo resources")]
+    [SerializeField]
+    private AudioSource sfxSource;
+    [SerializeField]
+    private AudioClip slashClip;
+
     private EnemyController currentEnemy;
     private bool canHit = true;
     [SerializeField]
     private float hitCooldown = 0.25f; // 4 hits per second
     private Camera mainCamera;
+
+    public delegate void SwordSlashAction();
+    public static event SwordSlashAction OnSwordSlash;
 
     void Start()
     {
@@ -65,6 +74,8 @@ public class CombatSystem : MonoBehaviour
         int damage = player.attack - currentEnemy.enemyData.defense;
         if (damage < 0) damage = 0;
         currentEnemy.TakeDamage(damage);
+
+        OnSwordSlash?.Invoke();
         AddToCombatLog($"You dealt {damage} physical damage!");
 
         if (currentEnemy.currentHealth <= 0)
@@ -85,6 +96,8 @@ public class CombatSystem : MonoBehaviour
             if (damage < 0) damage = 0;
             player.UseMana(10);
             currentEnemy.TakeDamage(damage);
+
+            OnSwordSlash?.Invoke();
             AddToCombatLog($"You dealt {damage} magic damage!");
 
             if (currentEnemy.currentHealth <= 0)

@@ -6,6 +6,7 @@ public class SoundManager : MonoBehaviour
     public AudioSource sfxSource;
 
     public AudioClip levelUpClip;
+    public AudioClip slashClip;
     public AudioClip enemyDefeatedClip;
     public AudioClip buttonClickClip;
 
@@ -15,12 +16,14 @@ public class SoundManager : MonoBehaviour
         sfxSource.volume = PlayerPrefs.GetFloat("SFXVolume", 1.0f);
         PlayerStats.OnLevelUp += PlayLevelUpSound;
         EnemyController.OnEnemyDefeated += PlayEnemyDefeatedSound;
+        CombatSystem.OnSwordSlash += PlaySwordSlashSound;
     }
 
     void OnDestroy()
     {
         PlayerStats.OnLevelUp -= PlayLevelUpSound;
         EnemyController.OnEnemyDefeated -= PlayEnemyDefeatedSound;
+        CombatSystem.OnSwordSlash -= PlaySwordSlashSound;
     }
 
     public void PlayLevelUpSound(int level)
@@ -28,7 +31,12 @@ public class SoundManager : MonoBehaviour
         sfxSource.PlayOneShot(levelUpClip);
     }
 
-    public void PlayEnemyDefeatedSound(int enemyLevel)
+    public void PlaySwordSlashSound()
+    {
+        sfxSource.PlayOneShot(slashClip);
+    }
+
+    public void PlayEnemyDefeatedSound(int level)
     {
         sfxSource.PlayOneShot(enemyDefeatedClip);
     }
