@@ -37,8 +37,8 @@ public class SaveLoadSystem : MonoBehaviour
         PlayerPrefs.SetInt("HealthPotions", inventorySystem.GetHealthPotions());
         PlayerPrefs.SetInt("ManaPotions", inventorySystem.GetManaPotions());
         PlayerPrefs.SetInt("HelmetLevel", inventorySystem.GetHelmetLevel());
-        PlayerPrefs.SetInt("BootsLevel", inventorySystem.GetBootsLevel());
-        PlayerPrefs.SetInt("BodyArmorLevel", inventorySystem.GetBodyArmorLevel());
+        PlayerPrefs.SetInt("ShieldLevel", inventorySystem.GetShieldLevel());
+        PlayerPrefs.SetInt("SwordLevel", inventorySystem.GetSwordLevel());
         PlayerPrefs.SetFloat("TimeElapsed", timerSystem.timeElapsed);
         PlayerPrefs.SetInt("SawInfoPanel", 1); // Assuming this is a bool, 1 means true
         PlayerPrefs.Save();
@@ -60,8 +60,8 @@ public class SaveLoadSystem : MonoBehaviour
             inventorySystem.healthPotions = PlayerPrefs.GetInt("HealthPotions");
             inventorySystem.manaPotions = PlayerPrefs.GetInt("ManaPotions");
             inventorySystem.helmetLevel = PlayerPrefs.GetInt("HelmetLevel");
-            inventorySystem.bootsLevel = PlayerPrefs.GetInt("BootsLevel");
-            inventorySystem.bodyArmorLevel = PlayerPrefs.GetInt("BodyArmorLevel");
+            inventorySystem.shieldLevel = PlayerPrefs.GetInt("ShieldLevel");
+            inventorySystem.swordLevel = PlayerPrefs.GetInt("SwordLevel");
             timerSystem.timeElapsed = PlayerPrefs.GetFloat("TimeElapsed");
         }
     }

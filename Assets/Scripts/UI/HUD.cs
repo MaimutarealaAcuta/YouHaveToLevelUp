@@ -13,11 +13,13 @@ public class HUD : MonoBehaviour
 
     private PlayerStats playerStats;
     private InventorySystem inventorySystem;
+    private BankSystem bankSystem;
 
     void Start()
     {
         playerStats = FindObjectOfType<PlayerStats>();
         inventorySystem = FindObjectOfType<InventorySystem>();
+        bankSystem = FindObjectOfType<BankSystem>();
 
         UpdateHUD();
     }
@@ -30,7 +32,7 @@ public class HUD : MonoBehaviour
     public void UpdateHUD()
     {
         levelText.text = "lvl " + playerStats.level;
-        moneyText.text = playerStats.money.ToString();
+        moneyText.text = bankSystem.money.ToString();
         HPpotionText.text = inventorySystem.healthPotions.ToString() + " / 10";
         MPpotionText.text = inventorySystem.manaPotions.ToString() + " / 10";
         XPpotionText.text = inventorySystem.xpPotions.ToString() + " / 3";
