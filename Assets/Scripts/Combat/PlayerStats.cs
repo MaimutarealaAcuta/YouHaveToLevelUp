@@ -48,8 +48,10 @@ public class PlayerStats : MonoBehaviour
         level++;
         maxHealth = maxHealth * 11 / 10; // +10%
         health = health * 11 / 10; // +10%
+        if (health < maxHealth / 2) health = maxHealth / 2;
         maxMana = maxMana * 105 / 100; // +5%
         mana = mana * 105 / 100; // +5%
+        if (mana < maxMana / 2) mana = maxMana / 2;
         attack += 2; // Example increment
         defense += 2; // Example increment
         OnLevelUp?.Invoke(level);

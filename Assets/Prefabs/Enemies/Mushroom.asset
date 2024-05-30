@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mushroom
   m_EditorClassIdentifier: 
   enemyName: Mushroom
-  baseHealth: 60
+  baseHealth: 20
   baseAttack: 4
   baseDefense: 2
   baseExperienceReward: 25
