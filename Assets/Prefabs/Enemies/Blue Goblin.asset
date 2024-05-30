@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Blue Goblin
   m_EditorClassIdentifier: 
   enemyName: Goblin
-  baseHealth: 50
-  baseAttack: 5
-  baseDefense: 3
+  baseHealth: 30
+  baseAttack: 4
+  baseDefense: 2
   baseExperienceReward: 20
   baseGoldReward: 10
   animatorController: {fileID: 9100000, guid: 158cdffb5b4796a4cb0e312f3e5318a9, type: 2}

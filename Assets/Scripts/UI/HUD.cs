@@ -33,7 +33,7 @@ public class HUD : MonoBehaviour
     public void UpdateHUD()
     {
         levelText.text = "lvl " + playerStats.level;
-        moneyText.text = bankSystem.money.ToString();
+        moneyText.text = bankSystem.GetMoney().ToString();
         HPpotionText.text = inventorySystem.healthPotions.ToString() + " / 10";
         MPpotionText.text = inventorySystem.manaPotions.ToString() + " / 10";
         XPpotionText.text = inventorySystem.xpPotions.ToString() + " / 3";

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Flying Eye
   m_EditorClassIdentifier: 
   enemyName: Flying Eye
-  baseHealth: 40
+  baseHealth: 15
   baseAttack: 6
   baseDefense: 2
   baseExperienceReward: 35

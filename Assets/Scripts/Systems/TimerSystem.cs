@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using static GameEvents;
 
 public class TimerSystem : MonoBehaviour
 {
@@ -35,7 +36,7 @@ public class TimerSystem : MonoBehaviour
         isTimerRunning = true;
     }
 
-    public void StopTimer()
+    public void StopTimer(EndGameType endGameType)
     {
         isTimerRunning = false;
     }
