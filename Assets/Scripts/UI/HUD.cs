@@ -21,6 +21,7 @@ public class HUD : MonoBehaviour
         inventorySystem = FindObjectOfType<InventorySystem>();
         bankSystem = FindObjectOfType<BankSystem>();
 
+
         UpdateHUD();
     }
 

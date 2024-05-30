@@ -9,7 +9,7 @@ public class PlayerStats : MonoBehaviour
     public int mana = 50;
     public int maxMana = 50;
     public int attack = 10;
-    public int defense = 10;
+    public int defense = 5;
     public int score = 0;
 
     public int MaxXP { get { return 50 * level * (level + 1); } }
