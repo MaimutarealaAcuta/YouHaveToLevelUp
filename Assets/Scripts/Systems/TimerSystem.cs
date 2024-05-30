@@ -4,7 +4,6 @@ using static GameEvents;
 
 public class TimerSystem : MonoBehaviour
 {
-    public Text timerText;
     public float timeElapsed = 0;
     private bool isTimerRunning = false;
 
@@ -24,16 +23,14 @@ public class TimerSystem : MonoBehaviour
 
     void Update()
     {
-        if (isTimerRunning)
-        {
+        if(isTimerRunning)
             timeElapsed += Time.deltaTime;
-            UpdateTimerDisplay();
-        }
     }
 
     public void StartTimer()
     {
         isTimerRunning = true;
+        timeElapsed = 0;
     }
 
     public void StopTimer(EndGameType endGameType)
@@ -41,10 +38,21 @@ public class TimerSystem : MonoBehaviour
         isTimerRunning = false;
     }
 
-    private void UpdateTimerDisplay()
+    public string getTime()
     {
         int minutes = Mathf.FloorToInt(timeElapsed / 60);
         int seconds = Mathf.FloorToInt(timeElapsed % 60);
-        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        return string.Format("{0:00}:{1:00}", minutes, seconds);
     }
+
+    #region UI
+    [Header("GUI")]
+    public GameObject InstructionsPanel;
+
+    public void StartGame()
+    {
+        GameEvents.TriggerGameStart();
+        InstructionsPanel.SetActive(false);
+    }
+    #endregion
 }

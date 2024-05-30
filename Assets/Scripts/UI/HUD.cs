@@ -15,6 +15,9 @@ public class HUD : MonoBehaviour
     private InventorySystem inventorySystem;
     private BankSystem bankSystem;
 
+    [Header("PauseMenu")]
+    public GameObject pauseMenu;
+
     void Start()
     {
         playerStats = FindObjectOfType<PlayerStats>();
@@ -22,12 +25,28 @@ public class HUD : MonoBehaviour
         bankSystem = FindObjectOfType<BankSystem>();
 
 
-        UpdateHUD();
+        GameEvents.OnGameStart += StartGame;
     }
 
     void Update()
     {
         UpdateHUD();
+
+        if (Input.GetKeyDown(KeyCode.Escape) && !pauseMenu.activeSelf)
+        {
+            TogglePauseMenu(true);
+        }
+    }
+
+    public void StartGame()
+    {
+        UpdateHUD();
+        gameObject.SetActive(true);
+    }
+
+    public void TogglePauseMenu(bool active)
+    {
+        pauseMenu.SetActive(active);
     }
 
     public void UpdateHUD()

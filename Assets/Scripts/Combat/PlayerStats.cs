@@ -56,6 +56,9 @@ public class PlayerStats : MonoBehaviour
         defense += 2; // Example increment
         OnLevelUp?.Invoke(level);
         Debug.Log($"Leveled up to {level}! Health: {health}, Mana: {mana}, Attack: {attack}, Defense: {defense}");
+
+        if (level == 100)
+            GameEvents.TriggerGameEnd(GameEvents.EndGameType.Win);
     }
 
     public void TakeDamage(int amount)

@@ -132,6 +132,7 @@ public class CombatSystem : MonoBehaviour
         {
             AddToCombatLog("You have been defeated!");
             // Handle player defeat logic
+            GameEvents.TriggerGameEnd(GameEvents.EndGameType.HPDepleted);
         }
     }
 
