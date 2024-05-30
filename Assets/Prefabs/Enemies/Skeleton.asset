@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8408841e5eb00cf4686177b502d84c12, type: 3}
+  m_Name: Skeleton
+  m_EditorClassIdentifier: 
+  enemyName: Skeleton
+  baseHealth: 70
+  baseAttack: 7
+  baseDefense: 4
+  baseExperienceReward: 30
+  baseGoldReward: 15
+  animatorController: {fileID: 9100000, guid: d0db564688d76b245800880e74fcaa2a, type: 2}
+  enemyPrefab: {fileID: 554711834668897395, guid: c4836c1ba681fa34fb16d3d86dfe797a, type: 3}

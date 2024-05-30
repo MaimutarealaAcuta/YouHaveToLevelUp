@@ -2,7 +2,13 @@ using UnityEngine;
 
 public class BankSystem : MonoBehaviour
 {
-    public int money = 0;
+    [SerializeField]
+    private int money = 0;
+    public int Money
+    { 
+        get => money;
+        set => money = value;
+    }
 
     public delegate void MoneyChangedAction(int newBalance);
     public static event MoneyChangedAction OnMoneyChanged;

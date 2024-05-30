@@ -7,13 +7,13 @@ public class ScoringSystem : MonoBehaviour
     void Start()
     {
         PlayerStats.OnLevelUp += AddScoreForLevelUp;
-        Enemy.OnEnemyDefeated += AddScoreForEnemyDefeat;
+        EnemyController.OnEnemyDefeated += AddScoreForEnemyDefeat;
     }
 
     void OnDestroy()
     {
         PlayerStats.OnLevelUp -= AddScoreForLevelUp;
-        Enemy.OnEnemyDefeated -= AddScoreForEnemyDefeat;
+        EnemyController.OnEnemyDefeated -= AddScoreForEnemyDefeat;
     }
 
     public void AddScoreForLevelUp(int level)

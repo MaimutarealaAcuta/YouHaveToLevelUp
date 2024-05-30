@@ -11,10 +11,12 @@ public class HUD : MonoBehaviour
     public Text scoreText;
 
     private PlayerStats playerStats;
+    private BankSystem bankSystem;
 
     void Start()
     {
         playerStats = FindObjectOfType<PlayerStats>();
+        bankSystem = FindObjectOfType<BankSystem>();
         UpdateHUD();
     }
 
@@ -27,7 +29,7 @@ public class HUD : MonoBehaviour
     {
         levelText.text = "Level: " + playerStats.level;
         experienceBar.value = (float)playerStats.experience / playerStats.GetNextLevelXP();
-        moneyText.text = "Money: " + playerStats.money;
+        moneyText.text = "Money: " + bankSystem.Money;
         healthText.text = "Health: " + playerStats.health + "/" + playerStats.maxHealth;
         manaText.text = "Mana: " + playerStats.mana + "/" + playerStats.maxMana;
         scoreText.text = "Score: " + playerStats.score;
