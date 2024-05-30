@@ -1,3 +1,4 @@
+#define CHEATS_ON
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
@@ -11,6 +12,7 @@ public class PlayerStats : MonoBehaviour
     public int attack = 10;
     public int defense = 5;
     public int score = 0;
+    public string name;
 
     public int MaxXP { get { return 50 * level * (level + 1); } }
 
@@ -22,6 +24,33 @@ public class PlayerStats : MonoBehaviour
         health = maxHealth;
         mana = maxMana;
     }
+
+    private void Update()
+    {
+        Cheats();
+    }
+
+#if CHEATS_ON
+    private void Cheats()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            level = 99;
+            experience = MaxXP - 99;
+            Debug.Log("Cheats enabled: Level 99");
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            health = maxHealth;
+            Debug.Log("Cheats enabled: Full Health");
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            mana = maxMana;
+            Debug.Log("Cheats enabled: Full Mana");
+        }
+    }
+#endif
 
     public void AddExperience(int amount)
     {

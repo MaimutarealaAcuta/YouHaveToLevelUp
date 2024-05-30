@@ -8,10 +8,15 @@ public class MapNavigation : MonoBehaviour
     public GameObject Market;
     public GameObject TrainingGrounds;
     public GameObject MagicForest;
+
+
+    private SoundManager soundManager;
     
     void Start()
     {
         GameEvents.OnGameStart += StartGame;
+
+        soundManager = FindObjectOfType<SoundManager>();
     }
 
     // Update is called once per frame
@@ -23,6 +28,7 @@ public class MapNavigation : MonoBehaviour
     private void StartGame()
     {
         GoToTown();
+        GameEvents.OnGameStart -= StartGame;
     }
 
     public void GoToTown()
@@ -31,6 +37,8 @@ public class MapNavigation : MonoBehaviour
         Market.SetActive(false);
         TrainingGrounds.SetActive(false);
         MagicForest.SetActive(false);
+
+        soundManager.EnterTown();
     }
 
     public void GoToMarket()
@@ -39,6 +47,8 @@ public class MapNavigation : MonoBehaviour
         Market.SetActive(true);
         TrainingGrounds.SetActive(false);
         MagicForest.SetActive(false);
+
+        soundManager.EnterMarket();
     }
 
     public void GoToTrainingGrounds()
@@ -47,6 +57,8 @@ public class MapNavigation : MonoBehaviour
         Market.SetActive(false);
         TrainingGrounds.SetActive(true);
         MagicForest.SetActive(false);
+
+        soundManager.EnterBattle();
     }
 
     public void GoToMagicForest()
@@ -55,5 +67,7 @@ public class MapNavigation : MonoBehaviour
         Market.SetActive(false);
         TrainingGrounds.SetActive(false);
         MagicForest.SetActive(true);
+        
+        soundManager.EnterBattle();
     }
 }

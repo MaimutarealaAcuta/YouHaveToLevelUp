@@ -40,6 +40,7 @@ public class EndGameScript : MonoBehaviour
 
     public void ToggleEndGame(EndGameType endGameType )
     {
+        GameEvents.OnGameEnd -= ToggleEndGame;
         endGamePanel.SetActive(true);
         switch (endGameType)
         {

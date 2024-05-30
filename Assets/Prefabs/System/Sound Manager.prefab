@@ -176,6 +176,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgroundMusic: {fileID: 4407984002380728367}
   sfxSource: {fileID: 6728946385189231623}
+  townMusic: {fileID: 8300000, guid: 343f9175365b48941a7ba431eb625f2c, type: 3}
+  marketMusic: {fileID: 8300000, guid: 459a065e24f691b41884a00e77a99a56, type: 3}
+  fightMusic: {fileID: 8300000, guid: f4ca6a851cd7e814882c64c1c9f8c937, type: 3}
   levelUpClip: {fileID: 8300000, guid: 1578a5b0c5cbc6949904893d6b616c3f, type: 3}
   slashClip: {fileID: 8300000, guid: 0b41e0351a297be4d81c1d81c0262528, type: 3}
   enemyDefeatedClip: {fileID: 8300000, guid: b3a93bc74e97ff749964261b902fdb5c, type: 3}

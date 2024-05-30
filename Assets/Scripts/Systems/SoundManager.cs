@@ -5,6 +5,12 @@ public class SoundManager : MonoBehaviour
     public AudioSource backgroundMusic;
     public AudioSource sfxSource;
 
+    [Header("Music")]
+    public AudioClip townMusic;
+    public AudioClip marketMusic;
+    public AudioClip fightMusic;
+
+    [Header("SFX")]
     public AudioClip levelUpClip;
     public AudioClip slashClip;
     public AudioClip enemyDefeatedClip;
@@ -45,4 +51,23 @@ public class SoundManager : MonoBehaviour
     {
         sfxSource.PlayOneShot(buttonClickClip);
     }
+
+    public void EnterMarket()
+    {
+        backgroundMusic.clip = marketMusic;
+        backgroundMusic.Play();
+    }
+    
+    public void EnterTown()
+    {
+        backgroundMusic.clip = townMusic;
+        backgroundMusic.Play();
+    }
+
+    public void EnterBattle()
+    {
+        backgroundMusic.clip = fightMusic;
+        backgroundMusic.Play();
+    }
+    
 }

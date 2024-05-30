@@ -42,6 +42,7 @@ public class HUD : MonoBehaviour
     {
         UpdateHUD();
         gameObject.SetActive(true);
+        GameEvents.OnGameStart -= StartGame;
     }
 
     public void TogglePauseMenu(bool active)
