@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8408841e5eb00cf4686177b502d84c12, type: 3}
+  m_Name: Mushroom
+  m_EditorClassIdentifier: 
+  enemyName: Mushroom
+  baseHealth: 60
+  baseAttack: 4
+  baseDefense: 2
+  baseExperienceReward: 25
+  baseGoldReward: 12
+  animatorController: {fileID: 9100000, guid: ed454db838256c8459216a1845061bba, type: 2}
+  enemyPrefab: {fileID: 3409439861581278943, guid: 6c7bc95ce30c37a46b4a65fa417eb43f, type: 3}

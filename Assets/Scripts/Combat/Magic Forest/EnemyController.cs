@@ -4,8 +4,12 @@ public class EnemyController : MonoBehaviour
 {
     public Enemy enemyData;
 
-    private Animator animator;
+    public Animator animator;
     public int currentHealth { get; private set; }
+    private int attack;
+    private int defense;
+    private int experienceReward;
+    private int goldReward;
 
     public delegate void EnemyDefeatedAction(int enemyLevel);
     public static event EnemyDefeatedAction OnEnemyDefeated;
@@ -22,7 +26,7 @@ public class EnemyController : MonoBehaviour
     //    }
     //}
 
-    public void ConfigureEnemy(Enemy data)
+    public void ConfigureEnemy(Enemy data, int playerLevel)
     {
         // Set up animator
         animator = GetComponent<Animator>();
@@ -35,27 +39,44 @@ public class EnemyController : MonoBehaviour
             Debug.LogError("Animator or Animator Controller not found!");
         }
 
-        // Set up enemy stats
-        currentHealth = data.maxHealth;
-
-        // Set other properties as needed
+        // Set up enemy stats based on player level
+        currentHealth = data.GetHealth(playerLevel);
+        attack = data.GetAttack(playerLevel);
+        defense = data.GetDefense(playerLevel);
+        experienceReward = data.GetExperienceReward(playerLevel);
+        goldReward = data.GetGoldReward(playerLevel);
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, int playerLevel)
     {
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
-            Die();
+            Die(playerLevel);
         }
     }
 
-    void Die()
+    void Die(int playerLevel)
     {
         Debug.Log(enemyData.enemyName + " died!");
 
-        OnEnemyDefeated?.Invoke(enemyData.level);
+        OnEnemyDefeated?.Invoke(playerLevel);
 
         Destroy(gameObject);
+    }
+
+    public bool IsDead()
+    {
+        return currentHealth <= 0;
+    }
+
+    public int GetExperienceReward()
+    {
+        return experienceReward;
+    }
+
+    public int GetGoldReward()
+    {
+        return goldReward;
     }
 }

@@ -3,12 +3,27 @@ using TMPro;
 
 public class FloatingTextController : MonoBehaviour
 {
+    [SerializeField]
+    private Transform floatingTextParent; // Should be a UI canvas or another UI element
     public GameObject floatingTextPrefab;
 
-    public void CreateFloatingText(Vector3 position, string text)
+    public void CreateFloatingText(string text)
     {
-        GameObject floatingText = Instantiate(floatingTextPrefab, position, Quaternion.identity, transform);
-        TextMeshPro tmp = floatingText.GetComponent<TextMeshPro>();
-        tmp.text = text;
+        // Instantiate the floating text as a child of the specified UI parent
+        GameObject floatingText = Instantiate(floatingTextPrefab, floatingTextParent);
+
+        //// Set the position relative to the UI parent
+        //RectTransform rectTransform = floatingText.GetComponent<RectTransform>();
+        //if (rectTransform != null)
+        //{
+        //    rectTransform.anchoredPosition = position;
+        //}
+
+        // Set the text
+        TextMeshProUGUI tmp = floatingText.GetComponent<TextMeshProUGUI>();
+        if (tmp != null)
+        {
+            tmp.text = text;
+        }
     }
 }

@@ -7,73 +7,62 @@ public class CombatSystem : MonoBehaviour
     [SerializeField]
     private PlayerStats player;
     [SerializeField]
-    private TextMeshPro combatLog;
+    private TextMeshProUGUI combatLogUI;
 
     [SerializeField]
     private Enemy[] enemies; // Array of enemy scriptable objects
     [SerializeField]
     private Transform enemySpawnPoint; // Spawn point for the enemy
+    [SerializeField]
+    private Transform enemyParentNode; // Parent node for the enemy
 
     [SerializeField]
     private int logLimit = 8; // Limit for the log entries
-    private string[] combatLogEntries;
+    private string[] combatLog;
     private int logIndex = 0;
     private bool logIsFull = false;
-
-    [Header("Combo resources")]
-    [SerializeField]
-    private AudioSource sfxSource;
-    [SerializeField]
-    private AudioClip slashClip;
 
     private EnemyController currentEnemy;
     private bool canHit = true;
     [SerializeField]
     private float hitCooldown = 0.25f; // 4 hits per second
-    private Camera mainCamera;
+    [SerializeField]
+    private int baseManaCost = 10;
 
     public delegate void SwordSlashAction();
     public static event SwordSlashAction OnSwordSlash;
 
     void Start()
     {
-        mainCamera = Camera.main;
-        combatLogEntries = new string[logLimit];
+        combatLog = new string[logLimit];
         SpawnEnemy();
     }
 
-    void Update()
+    public void PhysicalAttack()
     {
-        if (canHit && Input.GetMouseButton(0) && IsHitRegistered()) // Left click for physical attack
+        if (canHit)
         {
             PerformPhysicalAttack();
             StartCoroutine(HitCooldown());
         }
-        else if (canHit && Input.GetMouseButton(1) && IsHitRegistered()) // Right click for magic attack
+    }
+
+    public void MagicAttack()
+    {
+        if (canHit)
         {
             PerformMagicAttack();
             StartCoroutine(HitCooldown());
         }
     }
 
-    bool IsHitRegistered()
-    {
-        Vector2 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 0);
-
-        if (hit.collider != null)
-        {
-            return true;
-        }
-
-        return false;
-    }
-
     public void PerformPhysicalAttack()
     {
-        int damage = player.attack - currentEnemy.enemyData.defense;
+        int damage = player.attack - currentEnemy.enemyData.GetDefense(player.level);
         if (damage < 0) damage = 0;
-        currentEnemy.TakeDamage(damage);
+
+        currentEnemy.TakeDamage(damage, player.level);
+        currentEnemy.animator.SetTrigger("TakeDmg");
 
         OnSwordSlash?.Invoke();
         AddToCombatLog($"You dealt {damage} physical damage!");
@@ -90,12 +79,14 @@ public class CombatSystem : MonoBehaviour
 
     public void PerformMagicAttack()
     {
-        if (player.mana >= 10) // Example mana cost
+        if (player.mana >= GetManaCost())
         {
-            int damage = player.attack * 2 - currentEnemy.enemyData.defense; // Example magic damage formula
+            int damage = player.attack * 2 - currentEnemy.enemyData.GetDefense(player.level);
             if (damage < 0) damage = 0;
             player.UseMana(10);
-            currentEnemy.TakeDamage(damage);
+
+            currentEnemy.TakeDamage(damage, player.level);
+            currentEnemy.animator.SetTrigger("TakeDmg");
 
             OnSwordSlash?.Invoke();
             AddToCombatLog($"You dealt {damage} magic damage!");
@@ -115,6 +106,11 @@ public class CombatSystem : MonoBehaviour
         }
     }
 
+    int GetManaCost()
+    {
+        return Mathf.CeilToInt(baseManaCost + player.level * 0.2f);
+    }
+
     IEnumerator HitCooldown()
     {
         canHit = false;
@@ -124,7 +120,7 @@ public class CombatSystem : MonoBehaviour
 
     public void EnemyCounterAttack()
     {
-        int damage = currentEnemy.enemyData.attack - player.defense;
+        int damage = currentEnemy.enemyData.GetAttack(player.level) - player.defense;
         if (damage < 0) damage = 0;
         player.TakeDamage(damage);
         AddToCombatLog($"Enemy dealt {damage} damage to you!");
@@ -139,8 +135,8 @@ public class CombatSystem : MonoBehaviour
     public void DefeatEnemy()
     {
         AddToCombatLog($"{currentEnemy.enemyData.enemyName} defeated!");
-        player.AddExperience(currentEnemy.enemyData.experienceReward);
-        FindObjectOfType<BankSystem>().AddMoney(currentEnemy.enemyData.goldReward);
+        player.AddExperience(currentEnemy.enemyData.GetExperienceReward(player.level));
+        FindObjectOfType<BankSystem>().AddMoney(currentEnemy.enemyData.GetGoldReward(player.level));
         Destroy(currentEnemy.gameObject);
         SpawnEnemy();
     }
@@ -157,15 +153,16 @@ public class CombatSystem : MonoBehaviour
         Enemy randomEnemyData = enemies[randomIndex];
 
         // Instantiate the enemy prefab
-        GameObject enemyInstance = Instantiate(randomEnemyData.enemyPrefab, enemySpawnPoint.position, Quaternion.identity);
-        enemyInstance.transform.rotation = Quaternion.Euler(0, 180, 0);
+        GameObject enemyInstance = Instantiate(randomEnemyData.enemyPrefab, enemySpawnPoint.position, Quaternion.identity, enemyParentNode);
+        //enemyInstance.transform.position = randomEnemyData.enemyPrefab.transform.position;
+        //enemyInstance.transform.rotation = Quaternion.Euler(0, 180, 0);
 
         // Get the EnemyController component and configure it
         currentEnemy = enemyInstance.GetComponent<EnemyController>();
         if (currentEnemy != null)
         {
             currentEnemy.enemyData = randomEnemyData;
-            currentEnemy.ConfigureEnemy(randomEnemyData);
+            currentEnemy.ConfigureEnemy(randomEnemyData, player.level);
         }
         else
         {
@@ -177,7 +174,7 @@ public class CombatSystem : MonoBehaviour
 
     private void AddToCombatLog(string newEntry)
     {
-        combatLogEntries[logIndex] = newEntry;
+        combatLog[logIndex] = newEntry;
         logIndex = (logIndex + 1) % logLimit;
         if (logIndex == 0)
         {
@@ -189,14 +186,14 @@ public class CombatSystem : MonoBehaviour
 
     private void UpdateCombatLogUI()
     {
-        combatLog.text = "";
+        combatLogUI.text = "";
         int start = logIsFull ? logIndex : 0;
         int count = logIsFull ? logLimit : logIndex;
 
         for (int i = 0; i < count; i++)
         {
             int index = (start + i) % logLimit;
-            combatLog.text += combatLogEntries[index] + "\n";
+            combatLogUI.text += combatLog[index] + "\n";
         }
     }
 }

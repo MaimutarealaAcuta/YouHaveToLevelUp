@@ -12,13 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8408841e5eb00cf4686177b502d84c12, type: 3}
   m_Name: Blue Goblin
   m_EditorClassIdentifier: 
-  enemyName: Blue Goblin
-  level: 1
-  health: 50
-  maxHealth: 50
-  attack: 10
-  defense: 3
-  experienceReward: 100
-  goldReward: 10
+  enemyName: Goblin
+  baseHealth: 50
+  baseAttack: 5
+  baseDefense: 3
+  baseExperienceReward: 20
+  baseGoldReward: 10
   animatorController: {fileID: 9100000, guid: 158cdffb5b4796a4cb0e312f3e5318a9, type: 2}
   enemyPrefab: {fileID: 6689998353685328794, guid: 2150d3fd7f338e447877fd596f30da58, type: 3}

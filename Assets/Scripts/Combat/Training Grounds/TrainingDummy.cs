@@ -3,9 +3,8 @@ using System.Collections;
 
 public class TrainingDummy : MonoBehaviour
 {
-    public int baseExperience = 1;
-    public GameObject[] slashEffects;
-    public Transform slashEffectContainer;
+    [SerializeField]
+    private int baseExperience = 1;
 
     [Header("Combo resources")]
     [SerializeField]
@@ -17,35 +16,22 @@ public class TrainingDummy : MonoBehaviour
     private FloatingTextController floatingTextController;
     private float hitCooldown = 0.2f; // 5 hits per second
     private bool canHit = true;
-    private Camera mainCamera;
 
     void Start()
     {
         playerStats = FindObjectOfType<PlayerStats>();
         floatingTextController = FindObjectOfType<FloatingTextController>();
-        mainCamera = Camera.main;
     }
 
-    void Update()
+    public void HitDummy()
     {
-        if (Input.GetMouseButtonDown(0) && canHit)
-        {
-            RegisterHit();
-        }
-    }
-
-    void RegisterHit()
-    {
-        Vector2 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 0);
-
-        if (hit.collider != null && hit.collider.gameObject == gameObject)
+        if (canHit)
         {
             int experienceGained = baseExperience * playerStats.level;
             playerStats.AddExperience(experienceGained);
 
             PlayEffects();
-            ShowFloatingText(mousePosition, experienceGained);
+            ShowFloatingText(experienceGained);
 
             StartCoroutine(HitCooldown());
         }
@@ -67,12 +53,12 @@ public class TrainingDummy : MonoBehaviour
         sfxSource.PlayOneShot(slashClip);
     }
 
-    private void ShowFloatingText(Vector2 textPosition, int expAmount)
+    private void ShowFloatingText(int expAmount)
     {
         if (floatingTextController != null)
         {
             string floatingText = "+ " + expAmount.ToString() + " exp";
-            floatingTextController.CreateFloatingText(textPosition, floatingText);
+            floatingTextController.CreateFloatingText(floatingText);
         }
     }
 }
