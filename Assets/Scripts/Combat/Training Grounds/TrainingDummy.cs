@@ -14,7 +14,7 @@ public class TrainingDummy : MonoBehaviour
 
     private PlayerStats playerStats;
     private FloatingTextController floatingTextController;
-    private float hitCooldown = 0.2f; // 5 hits per second
+    private float hitCooldown = 0.15f;
     private bool canHit = true;
 
     void Start()
